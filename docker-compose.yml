@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  php-apache-drupal:
+    container_name: drupal
+#    image: naxirdan/drupal:latest
+    build: .
+    ports:
+      - "127.0.0.33:80:80"
+      - "127.0.0.33:443:443"
+    volumes:
+      - ./web/:/var/www/html/
+
+  db:
+    image: mysql:5.7
+    container_name: drupal_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal.2020
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  web:
+  db:
